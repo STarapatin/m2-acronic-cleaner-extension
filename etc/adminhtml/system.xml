@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="acronic" translate="label" sortOrder="20">
+            <label>ACRONIC EXTENSION</label>
+        </tab>
+        <section id="ac_cleaner" translate="label" type="text" sortOrder="40"
+                 showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Cleaner</label>
+            <tab>acronic</tab>
+            <resource>Acronic_Cleaner::config_cleaner</resource>
+            <group id="general" translate="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label><![CDATA[General Settings]]></label>
+                <attribute type="expanded">1</attribute>
+                <field id="enable" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Acronic Cleansing]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment><![CDATA[Cleanse catalog product by condition time]]></comment>
+                    <config_path>ac_cleaner/general/enable</config_path>
+                </field>
+            </group>
+            <group id="catalog_settings" translate="label" type="text" sortOrder="1"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Catalog Product Cleaner Settings]]></label>
+                <attribute type="expanded">1</attribute>
+                <depends>
+                    <field id="ac_cleaner/general/enabled">1</field>
+                </depends>
+                <field id="category_ids" translate="label" type="multiselect" sortOrder="2"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Select Categories]]></label>
+                    <source_model>Acronic\Cleaner\Model\Config\Source\Categories</source_model>
+                </field>
+                <field id="remove_after_months" translate="label" type="text" sortOrder="3"
+                       showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Remove After Months]]></label>
+                    <validate>validate-number validate-digits-range digits-range-1-12</validate>
+                </field>
+            </group>
+            <group id="cron" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label><![CDATA[Cron Run Settings for Cleaner]]></label>
+                <attribute type="expanded">1</attribute>
+                <depends>
+                    <field id="ac_cleaner/general/enabled">1</field>
+                </depends>
+                <field id="frequency" translate="label" type="select" sortOrder="1"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label><![CDATA[Frequency]]></label>
+                    <source_model>Acronic\Cleaner\Model\Config\Source\Frequency</source_model>
+                    <backend_model>Acronic\Cleaner\Model\Config\Backend\Cron</backend_model>
+                </field>
+                <field id="time" translate="label" type="time" sortOrder="2"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label><![CDATA[Start Time]]></label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
